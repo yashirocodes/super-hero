@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuperHero - SuperHero API</title>
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- own CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="navbar bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img class="img-logo" src="assets/img/logo.svg" alt="" />
+        </a>
+      </div>
+    </nav>
+    <!-- end nav -->
+    <!-- hero section -->
+    <header class="header"></header>
+    <!-- end hero section  -->
+    <main class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="titulo fw-bolder">Encuentra tu SuperHero</h1>
+            </div>
+            <div class="col-12">
+                <p class="titulo-input">Ingresa el numero del <strong>SuperHero</strong> a buscar .</p>
+                <form class="input-group mb-3" id="formulario">
+                    <input type="text" class="form-control" placeholder="Ingresa un numero aquí" id="searchUser">
+                    <button class="btn btn-outline-secondary" type="submit" id="searchAction">Buscar</button>
+                </form>
+            </div>
+            <!-- delivery content -->
+            <div class="col-7">
+                <h4>SuperHero Encontrado !</h4>
+                <div class="card mb-3">
+                    <div class="row">
+                      <div class="col-md-6" id="showImage">
+                        
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-body" id="showMe">
+                          
+                          
+                        </div>
+                          <ul class="list-group list-group-flush" id="showMeItem">
+                            </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-5">
+                    <div class="container" id="chartContainer">
+                        
+                    </div>
+                </div>
+                <!-- end delivery content -->
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
