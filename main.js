@@ -4,9 +4,9 @@ $(() => {
   const showMe = $("#showMe");
   const showMeItem = $("#showMeItem");
   const showImage = $("#showImage");
-  const chartContainer = $("#chartContainer")
-  const msjError = $("#msjError")
-  const superHeroSucces = $("#superHeroSucces")
+  const chartContainer = $("#chartContainer");
+  const msjError = $("#msjError");
+  const superHeroSucces = $("#superHeroSucces");
 
   //grafico .
 
@@ -16,25 +16,22 @@ $(() => {
     // console.log(searchUser.val());
 
     //validacion
-    const regExpLetras = /^[0-9-]+$/;
-    msjError.html("")
+    const regExpLetras = /^[0-9]+$/;
+    msjError.html("");
     if (!searchUser.val()) {
-        console.log("No se ingreso nada");
-        msjError.append(`
+      console.log("No se ingreso nada");
+      msjError.append(`
         <p>No se ingreso nada &#9888 </p>
-        `)
-        
-        return;
-      }
-      if (!regExpLetras.test(searchUser.val())) {
-        console.log("Solo se permiten letras");
-        msjError.append(`
-        <p>Solo se haceptan numeros &#9888 </p>
-        `)
-        return;
-        
-      }
+        `);
 
+      return;
+    }
+    if (!regExpLetras.test(searchUser.val())) {
+      msjError.append(`
+        <p>Solo se aceptan numeros &#9888 </p>
+        `);
+      return;
+    }
 
     //API
     $.ajax({
@@ -42,14 +39,18 @@ $(() => {
       url: `https://www.superheroapi.com/api.php/3525635500807579/${searchUser.val()}`,
       dataType: "JSON",
       success(data) {
-        superHeroSucces.append(` encontrado !`)
-        console.log(data.image.url);
+        superHeroSucces.html("");
+
+        superHeroSucces.append(`SuperHero encontrado !`);
+
         showMe.html("");
+
         showMe.append(`
         <h5 class="card-title">Nombre: ${data.name}</h5>
         <p class="card-text">Conexiones : ${data.connections["group-affiliation"]} </p>
         `);
         showMeItem.html("");
+
         showMeItem.append(`
         <li class="list-group-item">Publicado por : ${data.biography["publisher"]} </li>
         <li class="list-group-item">Ocupación : ${data.work["occupation"]} </li>
@@ -59,34 +60,75 @@ $(() => {
         <li class="list-group-item">Alianzas: ${data.biography.aliases}</li>
         `);
         showImage.html("");
+
         showImage.append(`
         <img src="${data.image.url}" class="img-fluid" alt="">
         `);
 
-        //data points
+        
 
         const heroStat = {
-            title: {
-                text: `Stats para ${data.name}`
+          title: {
+            text: `Stats para ${data.name}`,
+          },
+          animationEnabled: true,
+          data: [
+            {
+              type: "pie",
+              startAngle: 40,
+              toolTipContent: "<b>{label}</b>: {y}",
+              showInLegend: "true",
+              legendText: "{label}",
+              indexLabelFontSize: 16,
+              indexLabel: "{label} - {y}",
+              dataPoints: [
+                {
+                  y: `${
+                    data.powerstats.intelligence !== "null"
+                      ? data.powerstats.intelligence
+                      : 0
+                  }`,
+                  label: `Inteligencia`,
+                },
+                {
+                  y: `${
+                    data.powerstats.strength !== "null"
+                      ? data.powerstats.strength
+                      : 0
+                  }`,
+                  label: "Fuerza",
+                },
+                {
+                  y: `${
+                    data.powerstats.speed !== "null" ? data.powerstats.speed : 0
+                  }`,
+                  label: "Rapidéz",
+                },
+                {
+                  y: `${
+                    data.powerstats.durability !== "null"
+                      ? data.powerstats.durability
+                      : 0
+                  }`,
+                  label: "Durabilidad",
+                },
+                {
+                  y: `${
+                    data.powerstats.power !== "null" ? data.powerstats.power : 0
+                  }`,
+                  label: "Poder",
+                },
+                {
+                  y: `${
+                    data.powerstats.combat !== "null"
+                      ? data.powerstats.combat
+                      : 0
+                  }`,
+                  label: "Combate",
+                },
+              ],
             },
-            animationEnabled: true,
-            data: [{
-                type: "pie",
-                startAngle: 40,
-                toolTipContent: "<b>{label}</b>: {y}",
-                showInLegend: "true",
-                legendText: "{label}",
-                indexLabelFontSize: 16,
-                indexLabel: "{label} - {y}",
-                dataPoints: [
-                    { y: `${data.powerstats.intelligence}`, label: `Inteligencia` },
-                    { y: `${data.powerstats.strength}`, label: "Fuerza" },
-                    { y: `${data.powerstats.speed}`, label: "Rapidéz" },
-                    { y: `${data.powerstats.durability}`, label: "Durabilidad" },
-                    { y: `${data.powerstats.power}`, label: "Poder" },
-                    { y: `${data.powerstats.combat}`, label: "Combate" },
-                ]
-            }]
+          ],
         };
         chartContainer.CanvasJSChart(heroStat);
       },
