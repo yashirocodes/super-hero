@@ -5,6 +5,8 @@ $(() => {
   const showMeItem = $("#showMeItem");
   const showImage = $("#showImage");
   const chartContainer = $("#chartContainer")
+  const msjError = $("#msjError")
+  const superHeroSucces = $("#superHeroSucces")
 
   //grafico .
 
@@ -14,6 +16,25 @@ $(() => {
     // console.log(searchUser.val());
 
     //validacion
+    const regExpLetras = /^[0-9-]+$/;
+    msjError.html("")
+    if (!searchUser.val()) {
+        console.log("No se ingreso nada");
+        msjError.append(`
+        <p>No se ingreso nada &#9888 </p>
+        `)
+        
+        return;
+      }
+      if (!regExpLetras.test(searchUser.val())) {
+        console.log("Solo se permiten letras");
+        msjError.append(`
+        <p>Solo se haceptan numeros &#9888 </p>
+        `)
+        return;
+        
+      }
+
 
     //API
     $.ajax({
@@ -21,6 +42,7 @@ $(() => {
       url: `https://www.superheroapi.com/api.php/3525635500807579/${searchUser.val()}`,
       dataType: "JSON",
       success(data) {
+        superHeroSucces.append(` encontrado !`)
         console.log(data.image.url);
         showMe.html("");
         showMe.append(`
